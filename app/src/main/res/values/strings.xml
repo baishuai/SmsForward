@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SmsForward</string>
+    <string name="request_sms_permission">Request SMS Permission</string>
+    <string name="permission_granted">Permission Granted</string>
+</resources>
