@@ -4,12 +4,16 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.IBinder
+import android.preference.PreferenceManager
 import android.provider.Telephony
+import android.util.Log
 import baishuai.github.io.smsforward.IApp
-import baishuai.github.io.smsforward.MainActivity
 import baishuai.github.io.smsforward.R
 import baishuai.github.io.smsforward.forward.FeigeRepo
+import baishuai.github.io.smsforward.ui.MainActivity
+import baishuai.github.io.smsforward.ui.MainFragment
 import javax.inject.Inject
 
 /**
@@ -22,20 +26,12 @@ class ForwardService : Service() {
     @Inject
     lateinit var forward: FeigeRepo
 
+    @Inject
+    lateinit var receiver: InSmsListener
+
     override fun onCreate() {
         super.onCreate()
         IApp[this].applicationComponent.inject(this)
-
-        val notificationIntent = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
-        val notification = Notification.Builder(this)
-                .setContentTitle(getString(R.string.forward_service))
-                .setContentText(getString(R.string.forward_service))
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setTicker(getString(R.string.forward_service))
-                .setContentIntent(pendingIntent)
-                .build()
-        startForeground(1, notification)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -43,11 +39,42 @@ class ForwardService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null && Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {
-            for (smsMessage in Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-                forward.forward(smsMessage)
+        if (intent != null)
+            when (intent.action) {
+                Telephony.Sms.Intents.SMS_RECEIVED_ACTION -> {
+                    for (smsMessage in Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
+                        Log.d(this.javaClass.canonicalName, smsMessage.messageBody)
+                        forward.forward(smsMessage)
+                    }
+                }
+                MainFragment.REGISTER_RECEIVER -> {
+                    val notificationIntent = Intent(this, MainActivity::class.java)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+                    val notification = Notification.Builder(this)
+                            .setContentTitle(getString(R.string.forward_service))
+                            .setContentText(getString(R.string.forward_service))
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setTicker(getString(R.string.forward_service))
+                            .setContentIntent(pendingIntent)
+                            .build()
+                    startForeground(1, notification)
+
+                    val filter = IntentFilter()
+                    filter.addAction(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
+                    registerReceiver(receiver, filter)
+                    PreferenceManager.getDefaultSharedPreferences(this).edit()
+                            .putBoolean(MainFragment.REGISTER_RECEIVER, true)
+                            .apply()
+                }
+                MainFragment.UNREGISTER_RECEIVER -> {
+                    stopForeground(true)
+                    unregisterReceiver(receiver)
+                    PreferenceManager.getDefaultSharedPreferences(this).edit()
+                            .putBoolean(MainFragment.REGISTER_RECEIVER, false)
+                            .apply()
+                    stopSelf()
+                }
             }
-        }
         return START_REDELIVER_INTENT
     }
 

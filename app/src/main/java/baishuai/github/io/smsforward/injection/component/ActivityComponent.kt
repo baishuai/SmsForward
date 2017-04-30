@@ -1,8 +1,8 @@
 package baishuai.github.io.smsforward.injection.component
 
-import baishuai.github.io.smsforward.MainActivity
 import baishuai.github.io.smsforward.injection.ActivityScope
 import baishuai.github.io.smsforward.injection.module.ActivityModule
+import baishuai.github.io.smsforward.ui.MainActivity
 import dagger.Component
 
 /**

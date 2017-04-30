@@ -3,4 +3,7 @@
     <string name="request_sms_permission">Request SMS Permission</string>
     <string name="permission_granted">Permission Granted</string>
     <string name="forward_service">Forward Service</string>
+    <string name="action_settings">Settings</string>
+    <string name="turn_on_service">Turn on Sms Forward</string>
+    <string name="turn_off_service">Turn off Sms Forward</string>
 </resources>

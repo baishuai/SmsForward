@@ -4,12 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
+import javax.inject.Inject
 
 /**
  * Created by bai on 17-4-28.
  */
 
-class InSmsListener : BroadcastReceiver() {
+class InSmsListener @Inject constructor() : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {

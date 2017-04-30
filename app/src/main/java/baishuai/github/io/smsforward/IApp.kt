@@ -5,6 +5,9 @@ import android.content.Context
 import baishuai.github.io.smsforward.injection.component.ApplicationComponent
 import baishuai.github.io.smsforward.injection.component.DaggerApplicationComponent
 import baishuai.github.io.smsforward.injection.module.ApplicationModule
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
 
 /**
  * Created by bai on 17-4-29.
@@ -17,6 +20,8 @@ class IApp : Application() {
     override fun onCreate() {
         super.onCreate()
         initDaggerComponent()
+
+        Timber.plant(DebugTree())
     }
 
 
