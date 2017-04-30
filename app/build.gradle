@@ -21,12 +21,24 @@ android {
         enabled = true
     }
 
+    signingConfigs {
+        release {
+            storeFile file("../release.jks")
+            storePassword rootProject.ext.storePass
+            keyAlias "key"
+            keyPassword rootProject.ext.keyPass
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
