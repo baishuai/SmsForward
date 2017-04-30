@@ -42,7 +42,7 @@ class ApplicationModule(private val app: IApp) {
 
         val build = OkHttpClient.Builder().addInterceptor { chain ->
             var request = chain.request()
-            val url = request.url().newBuilder().addQueryParameter("uid", "159")
+            val url = request.url().newBuilder().addQueryParameter("uid", BuildConfig.FEIGE_UID.toString())
                     .addQueryParameter("secret", BuildConfig.FEIGE_SECRET)
                     .build()
             request = request.newBuilder().url(url).build()
