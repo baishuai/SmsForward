@@ -1,6 +1,7 @@
 package baishuai.github.io.smsforward
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import baishuai.github.io.smsforward.databinding.ActivityMainBinding
+import baishuai.github.io.smsforward.service.ForwardService
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +35,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val startIntent = Intent(this, ForwardService::class.java)
+        startService(startIntent)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -50,7 +55,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-
         private val REQUEST_SMS_RECEIVE = 10010
     }
 }
