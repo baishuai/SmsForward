@@ -7,6 +7,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.GsonConverterFactory
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import javax.inject.Named
 
 /**
@@ -23,6 +24,7 @@ class ForwardModule {
                 .client(client)
                 .baseUrl("https://u.ifeige.cn/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         return retrofit
     }
@@ -41,6 +43,7 @@ class ForwardModule {
                 .client(client)
                 .baseUrl("https://slack.com/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         return retrofit
     }

@@ -19,5 +19,4 @@ class MainActivity : BaseActivity() {
                 .replace(R.id.fragment, MainFragment()).commit()
     }
 
-
 }

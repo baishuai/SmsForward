@@ -3,10 +3,7 @@ package baishuai.github.io.smsforward.forward.slack
 import android.telephony.SmsMessage
 import baishuai.github.io.smsforward.BuildConfig
 import baishuai.github.io.smsforward.forward.ForwardRepoApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -15,19 +12,10 @@ import javax.inject.Inject
 
 class SlackRepo @Inject constructor(private val api: SlackApi) : ForwardRepoApi {
 
-    override fun forward(sms: SmsMessage) {
-        val call = api.forward(BuildConfig.SLACK_TOKEN, BuildConfig.SLACK_CHANNEL,
+    override fun forward(sms: SmsMessage): Single<Boolean> {
+        return api.forward(BuildConfig.SLACK_TOKEN, BuildConfig.SLACK_CHANNEL,
                 sms.messageBody,
                 sms.originatingAddress, false)
-
-        call.enqueue(object : Callback<SlackResult> {
-            override fun onResponse(call: Call<SlackResult>, response: Response<SlackResult>) {
-                Timber.d(response.body().toString())
-            }
-
-            override fun onFailure(call: Call<SlackResult>, t: Throwable) {
-                Timber.d(t)
-            }
-        })
+                .retry(3).map { it.ok }
     }
 }

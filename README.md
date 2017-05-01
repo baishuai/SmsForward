@@ -18,6 +18,10 @@ Sms Forward
 并且修改 `feigesecret` 和 `feigeuid` 为飞鸽快信网站提供的值  
 修改 `slacktoken` `slackchannel` 为从slack中获取的值
 
+**注意事项**  
+MIUI 系统中的神隐模式会在应
+用进入后台后限制应用的网络访问，导致转发失败，
+在MIUI中使用应关闭神隐模式。
 
 ## Todo
 
@@ -25,3 +29,5 @@ Sms Forward
 - [ ] 权限检测在sdk版本低于23时检查结果不正确
 - [x] 支持开启、关闭转发服务
 - [ ] 网络转发短信失败时直接通过本机短信接口转发
+
+

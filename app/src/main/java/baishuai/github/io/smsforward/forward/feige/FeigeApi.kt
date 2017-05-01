@@ -1,7 +1,7 @@
 package baishuai.github.io.smsforward.forward.feige
 
 
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -16,5 +16,5 @@ interface FeigeApi {
                 @Query("key") key: String,
                 @Query("title") title: String,
                 @Query("content") content: String,
-                @Query("remark") remark: String): Call<FeigeResult>
+                @Query("remark") remark: String): Single<FeigeResult>
 }
