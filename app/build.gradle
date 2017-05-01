@@ -15,6 +15,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "FEIGE_SECRET", rootProject.ext.feigesecret
         buildConfigField "int", "FEIGE_UID", rootProject.ext.feigeuid
+
+        buildConfigField "String", "SLACK_TOKEN", rootProject.ext.slacktoken
+        buildConfigField "String", "SLACK_CHANNEL", rootProject.ext.slackchannel
     }
 
     dataBinding {

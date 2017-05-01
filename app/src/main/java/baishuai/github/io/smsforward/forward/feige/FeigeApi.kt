@@ -1,4 +1,4 @@
-package baishuai.github.io.smsforward.forward
+package baishuai.github.io.smsforward.forward.feige
 
 
 import retrofit2.Call
@@ -11,8 +11,10 @@ import retrofit2.http.Query
 interface FeigeApi {
 
     @POST("api/user_sendmsg")
-    fun forward(@Query("key") key: String,
+    fun forward(@Query("uid") uid: String,
+                @Query("secret") secret: String,
+                @Query("key") key: String,
                 @Query("title") title: String,
                 @Query("content") content: String,
-                @Query("remark") remark: String): Call<Result>
+                @Query("remark") remark: String): Call<FeigeResult>
 }

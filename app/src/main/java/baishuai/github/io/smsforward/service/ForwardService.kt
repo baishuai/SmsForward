@@ -8,12 +8,12 @@ import android.content.IntentFilter
 import android.os.IBinder
 import android.preference.PreferenceManager
 import android.provider.Telephony
-import android.util.Log
 import baishuai.github.io.smsforward.IApp
 import baishuai.github.io.smsforward.R
-import baishuai.github.io.smsforward.forward.FeigeRepo
+import baishuai.github.io.smsforward.forward.ForwardRepo
 import baishuai.github.io.smsforward.ui.MainActivity
 import baishuai.github.io.smsforward.ui.MainFragment
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -24,13 +24,14 @@ import javax.inject.Inject
 class ForwardService : Service() {
 
     @Inject
-    lateinit var forward: FeigeRepo
+    lateinit var forward: ForwardRepo
 
     @Inject
     lateinit var receiver: InSmsListener
 
     override fun onCreate() {
         super.onCreate()
+        Timber.d("onCreate")
         IApp[this].applicationComponent.inject(this)
     }
 
@@ -39,11 +40,12 @@ class ForwardService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null)
+        if (intent != null) {
+            Timber.d("onStartCommand " + intent.action)
             when (intent.action) {
                 Telephony.Sms.Intents.SMS_RECEIVED_ACTION -> {
                     for (smsMessage in Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-                        Log.d(this.javaClass.canonicalName, smsMessage.messageBody)
+                        Timber.d(smsMessage.messageBody)
                         forward.forward(smsMessage)
                     }
                 }
@@ -65,6 +67,7 @@ class ForwardService : Service() {
                     PreferenceManager.getDefaultSharedPreferences(this).edit()
                             .putBoolean(MainFragment.REGISTER_RECEIVER, true)
                             .apply()
+                    Timber.d("registerReceiver")
                 }
                 MainFragment.UNREGISTER_RECEIVER -> {
                     stopForeground(true)
@@ -72,9 +75,11 @@ class ForwardService : Service() {
                     PreferenceManager.getDefaultSharedPreferences(this).edit()
                             .putBoolean(MainFragment.REGISTER_RECEIVER, false)
                             .apply()
+                    Timber.d("unregisterReceiver")
                     stopSelf()
                 }
             }
+        }
         return START_REDELIVER_INTENT
     }
 

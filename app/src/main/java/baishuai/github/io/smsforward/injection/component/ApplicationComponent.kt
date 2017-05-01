@@ -2,6 +2,7 @@ package baishuai.github.io.smsforward.injection.component
 
 import android.app.Application
 import android.content.Context
+import baishuai.github.io.smsforward.forward.ForwardComponent
 import baishuai.github.io.smsforward.injection.ApplicationContext
 import baishuai.github.io.smsforward.injection.module.ApplicationModule
 import baishuai.github.io.smsforward.service.ForwardService
@@ -23,4 +24,6 @@ interface ApplicationComponent {
     fun context(): Context
 
     fun application(): Application
+
+    fun forwardComponemt(): ForwardComponent
 }
