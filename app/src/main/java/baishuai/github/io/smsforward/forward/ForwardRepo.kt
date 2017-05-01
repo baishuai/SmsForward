@@ -20,9 +20,7 @@ class ForwardRepo @Inject constructor(val context: IApp) {
     }
 
     fun forward(sms: SmsMessage) {
-        for (repo in this.repos) {
-            repo.forward(sms)
-        }
+        repos.forEach { it.forward(sms) }
     }
 
 }

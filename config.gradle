@@ -1,4 +1,6 @@
 ext {
     feigesecret = "\"zzzzyyyyxxxx111122223333\""
     feigeuid = "123"
+    slacktoken = "\"xoxb-xxxxxxxxxxx\""
+    slackchannel = "\"G12345678\""
 }

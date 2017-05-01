@@ -17,8 +17,8 @@ class SlackRepo @Inject constructor(private val api: SlackApi) : ForwardRepoApi 
 
     override fun forward(sms: SmsMessage) {
         val call = api.forward(BuildConfig.SLACK_TOKEN, BuildConfig.SLACK_CHANNEL,
-                String.format("SmsFrom: %s\n%s", sms.originatingAddress, sms.messageBody),
-                "", true)
+                sms.messageBody,
+                sms.originatingAddress, false)
 
         call.enqueue(object : Callback<SlackResult> {
             override fun onResponse(call: Call<SlackResult>, response: Response<SlackResult>) {
