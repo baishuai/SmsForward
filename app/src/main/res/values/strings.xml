@@ -6,4 +6,12 @@
     <string name="action_settings">Settings</string>
     <string name="turn_on_service">Turn on Sms Forward</string>
     <string name="turn_off_service">Turn off Sms Forward</string>
+    <string name="slack">Slack</string>
+    <string name="feige">Feige</string>
+    <string name="feige_uid">feige_uid</string>
+    <string name="feige_secret">feige_secret</string>
+    <string name="slack_token">slack_token</string>
+    <string name="slack_channel">slack_channel</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>

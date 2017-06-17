@@ -13,6 +13,7 @@ import baishuai.github.io.smsforward.R
 import baishuai.github.io.smsforward.forward.ForwardRepo
 import baishuai.github.io.smsforward.ui.MainActivity
 import baishuai.github.io.smsforward.ui.MainFragment
+import baishuai.github.io.smsforward.ui.SettingFragment
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -77,6 +78,9 @@ class ForwardService : Service() {
                             .apply()
                     Timber.d("unregisterReceiver")
                     stopSelf()
+                }
+                SettingFragment.UPDATE_REPOS -> {
+                    forward.updateRepos()
                 }
             }
         }

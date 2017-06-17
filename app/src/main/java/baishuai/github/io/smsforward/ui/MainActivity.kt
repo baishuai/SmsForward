@@ -8,15 +8,29 @@ import baishuai.github.io.smsforward.ui.base.BaseActivity
 
 class MainActivity : BaseActivity() {
 
+
     lateinit var mainBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        setSupportActionBar(mainBinding.toolbar)
 
+        mainBinding.toolbar.title = getString(R.string.app_name)
+        mainBinding.toolbar.inflateMenu(R.menu.menu_main)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment, MainFragment()).commit()
+
+        mainBinding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.action_settings) {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment, SettingFragment())
+                        .addToBackStack("main_fragment")
+                        .commit()
+                true
+            } else {
+                false
+            }
+        }
     }
 
 }

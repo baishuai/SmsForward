@@ -8,6 +8,9 @@ import io.reactivex.Single
  */
 interface ForwardRepoApi {
     fun forward(sms: SmsMessage): Single<Boolean>
+    fun checkToken(): Single<Boolean>
+    fun name(): String
+
 }
 
 

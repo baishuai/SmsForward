@@ -1,7 +1,8 @@
 package baishuai.github.io.smsforward.forward
 
-import baishuai.github.io.smsforward.forward.feige.FeigeRepo
-import baishuai.github.io.smsforward.forward.slack.SlackRepo
+import baishuai.github.io.smsforward.forward.directsms.DirectSmsRepo
+import baishuai.github.io.smsforward.forward.feige.FeigeApi
+import baishuai.github.io.smsforward.forward.slack.SlackApi
 import dagger.Subcomponent
 import javax.inject.Singleton
 
@@ -13,7 +14,10 @@ import javax.inject.Singleton
 @Subcomponent(modules = arrayOf(ForwardModule::class))
 interface ForwardComponent {
 
-    fun feigeRepo(): FeigeRepo
 
-    fun slackRepo(): SlackRepo
+    fun directSmsRepo(): DirectSmsRepo
+
+    fun feigeApi(): FeigeApi
+
+    fun slackApi(): SlackApi
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmsForward</string>
+    <string name="action_settings">设置</string>
+    <string name="turn_off_service">关闭转发服务</string>
+    <string name="turn_on_service">打开转发服务</string>
+    <string name="slack">Slack</string>
+    <string name="feige">飞鸽快信</string>
+    <string name="feige_uid">feige_uid</string>
+    <string name="feige_secret">feige_secret</string>
+    <string name="slack_token">slack_token</string>
+    <string name="slack_channel">slackchannel</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+</resources>

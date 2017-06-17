@@ -7,17 +7,13 @@ android {
     buildToolsVersion "25.0.3"
 
     defaultConfig {
-        applicationId "baishuai.github.io.smsforward"
+        applicationId "io.github.baishuai.smsforward"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "FEIGE_SECRET", rootProject.ext.feigesecret
-        buildConfigField "int", "FEIGE_UID", rootProject.ext.feigeuid
 
-        buildConfigField "String", "SLACK_TOKEN", rootProject.ext.slacktoken
-        buildConfigField "String", "SLACK_CHANNEL", rootProject.ext.slackchannel
     }
 
     dataBinding {
@@ -27,9 +23,9 @@ android {
     signingConfigs {
         release {
             storeFile file("../release.jks")
-            storePassword rootProject.ext.storePass
+            //storePassword rootProject.ext.storePass
             keyAlias "key"
-            keyPassword rootProject.ext.keyPass
+            //keyPassword rootProject.ext.keyPass
         }
     }
 
@@ -46,9 +42,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
@@ -72,7 +67,10 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
 
     testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }
 
 repositories {
