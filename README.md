@@ -25,9 +25,25 @@ MIUI 系统中的神隐模式会在应
 
 ## Todo
 
-- [ ] 直接在app上修改`feigeuid`和`feigesecret`
+- [x] 直接在app上修改`feigeuid`和`feigesecret`
 - [ ] 权限检测在sdk版本低于23时检查结果不正确
 - [x] 支持开启、关闭转发服务
 - [ ] 网络转发短信失败时直接通过本机短信接口转发
 
 
+
+
+
+set slack bot
+add a bot
+get bot token
+https://personal-baishuai.slack.com/services/B56MG7Z6F
+https://my.slack.com/apps/manage/custom-integrations
+
+
+new a private channel
+add bot to private channel
+
+
+get channel(group ) id
+https://api.slack.com/methods/groups.list/test
