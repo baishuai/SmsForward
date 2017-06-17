@@ -3,6 +3,7 @@ package baishuai.github.io.smsforward.forward
 import android.preference.PreferenceManager
 import android.telephony.SmsMessage
 import baishuai.github.io.smsforward.IApp
+import baishuai.github.io.smsforward.R
 import baishuai.github.io.smsforward.forward.directsms.DirectSmsRepo
 import baishuai.github.io.smsforward.forward.feige.FeigeRepo
 import baishuai.github.io.smsforward.forward.slack.SlackRepo
@@ -29,21 +30,26 @@ class ForwardRepo @Inject constructor(val context: IApp) {
     fun updateRepos() {
         repos.clear()
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val slack_token = sharedPreferences.getString(SlackRepo.SLACK_TOKEN, "")
-        val slack_channel = sharedPreferences.getString(SlackRepo.SLACK_CHANNEL, "")
-        if (slack_token.isNotEmpty() && slack_channel.isNotEmpty()) {
-            val api = context.applicationComponent.forwardComponemt().slackApi()
-            repos.add(SlackRepo(api, slack_token, slack_channel))
+
+        if (sharedPreferences.getBoolean(context.getString(R.string.slack_checkbox_preference), false)) {
+            val slack_token = sharedPreferences.getString(SlackRepo.SLACK_TOKEN, "")
+            val slack_channel = sharedPreferences.getString(SlackRepo.SLACK_CHANNEL, "")
+            if (slack_token.isNotEmpty() && slack_channel.isNotEmpty()) {
+                val api = context.applicationComponent.forwardComponemt().slackApi()
+                repos.add(SlackRepo(context, api, slack_token, slack_channel))
+            }
         }
 
-        val feige_token = sharedPreferences.getString(FeigeRepo.FEIGE_TOKEN, "")
-        val feige_uid = sharedPreferences.getString(FeigeRepo.FEIGE_UID, "")
-        if (feige_token.isNotEmpty() && feige_uid.isNotEmpty()) {
-            val api = context.applicationComponent.forwardComponemt().feigeApi()
-            repos.add(FeigeRepo(api, feige_token, feige_uid))
+        if (sharedPreferences.getBoolean(context.getString(R.string.feige_checkbox_preference), false)) {
+            val feige_token = sharedPreferences.getString(FeigeRepo.FEIGE_TOKEN, "")
+            val feige_uid = sharedPreferences.getString(FeigeRepo.FEIGE_UID, "")
+            if (feige_token.isNotEmpty() && feige_uid.isNotEmpty()) {
+                val api = context.applicationComponent.forwardComponemt().feigeApi()
+                repos.add(FeigeRepo(context, api, feige_token, feige_uid))
+            }
         }
 
-        via_sms = sharedPreferences.getBoolean(DirectSmsRepo.DIRECT_SMS, false)
+        via_sms = sharedPreferences.getBoolean(context.getString(R.string.direct_sms_checkbox_preference), false)
     }
 
     fun forward(sms: SmsMessage) {
@@ -57,7 +63,7 @@ class ForwardRepo @Inject constructor(val context: IApp) {
 
     fun onError(t: Throwable, sms: SmsMessage) {
         if (via_sms) {
-            context.applicationComponent.forwardComponemt().directSmsRepo().forward(sms)
+            DirectSmsRepo(context, "todo number").forward(sms)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ Timber.d(it.toString()) }, { Timber.d(it) })

@@ -12,6 +12,13 @@
     <string name="feige_secret">feige_secret</string>
     <string name="slack_token">slack_token</string>
     <string name="slack_channel">slack_channel</string>
+    <string name="phone_number">phone_number</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="slack_checkbox_preference" translatable="false">slack_checkbox_preference</string>
+    <string name="feige_checkbox_preference" translatable="false">feige_checkbox_preference</string>
+    <string name="direct_sms_checkbox_preference" translatable="false">direct_sms_checkbox_preference</string>
+    <string name="direct_sms">direct_sms</string>
+    <string name="direct_sms_detail">direct_sms_detail</string>
+    <string name="unvalid_config">unvalid_config</string>
 </resources>

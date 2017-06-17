@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="slack_checkbox_preference"
+        android:title="@string/slack" />
+
+    <CheckBoxPreference
+        android:key="feige_checkbox_preference"
+        android:title="@string/feige" />
+
+
+    <CheckBoxPreference
+        android:key="direct_sms_checkbox_preference"
+        android:summary="@string/direct_sms_detail"
+        android:title="@string/direct_sms" />
+
+</PreferenceScreen>

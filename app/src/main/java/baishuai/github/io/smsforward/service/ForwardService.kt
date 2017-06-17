@@ -13,7 +13,7 @@ import baishuai.github.io.smsforward.R
 import baishuai.github.io.smsforward.forward.ForwardRepo
 import baishuai.github.io.smsforward.ui.MainActivity
 import baishuai.github.io.smsforward.ui.MainFragment
-import baishuai.github.io.smsforward.ui.SettingFragment
+import baishuai.github.io.smsforward.ui.PrefsFragment
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -55,7 +55,6 @@ class ForwardService : Service() {
                     val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
                     val notification = Notification.Builder(this)
                             .setContentTitle(getString(R.string.forward_service))
-                            .setContentText(getString(R.string.forward_service))
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setTicker(getString(R.string.forward_service))
                             .setContentIntent(pendingIntent)
@@ -79,7 +78,7 @@ class ForwardService : Service() {
                     Timber.d("unregisterReceiver")
                     stopSelf()
                 }
-                SettingFragment.UPDATE_REPOS -> {
+                PrefsFragment.UPDATE_REPOS -> {
                     forward.updateRepos()
                 }
             }

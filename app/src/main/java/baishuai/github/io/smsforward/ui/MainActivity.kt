@@ -16,14 +16,13 @@ class MainActivity : BaseActivity() {
         mainBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
         mainBinding.toolbar.title = getString(R.string.app_name)
-        mainBinding.toolbar.inflateMenu(R.menu.menu_main)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment, MainFragment()).commit()
 
         mainBinding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.action_settings) {
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment, SettingFragment())
+                        .replace(R.id.fragment, PrefsFragment())
                         .addToBackStack("main_fragment")
                         .commit()
                 true
@@ -31,6 +30,15 @@ class MainActivity : BaseActivity() {
                 false
             }
         }
+    }
+
+    fun clearMenu() {
+        mainBinding.toolbar.menu.clear()
+    }
+
+    fun setMemu() {
+        clearMenu()
+        mainBinding.toolbar.inflateMenu(R.menu.menu_main)
     }
 
 }

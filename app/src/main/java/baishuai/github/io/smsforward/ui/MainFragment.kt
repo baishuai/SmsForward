@@ -18,7 +18,6 @@ import android.view.ViewGroup
 import baishuai.github.io.smsforward.R
 import baishuai.github.io.smsforward.databinding.FragmentMainBinding
 import baishuai.github.io.smsforward.service.ForwardService
-import java.util.*
 
 
 /**
@@ -31,9 +30,13 @@ class MainFragment : Fragment() {
 
     var isRegister: Boolean = false
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
+        if (activity is MainActivity) {
+            (activity as MainActivity).setMemu()
+        }
         return mBinding.root
     }
 
@@ -86,7 +89,7 @@ class MainFragment : Fragment() {
         when (requestCode) {
             REQUEST_SMS_RECEIVE -> {
                 Log.d(this.javaClass.canonicalName, grantResults.toString())
-                val idx = Arrays.asList(*permissions).indexOf(Manifest.permission.RECEIVE_SMS)
+                val idx = permissions.asList().indexOf(Manifest.permission.RECEIVE_SMS)
                 mBinding.permissionSwitch.isChecked = grantResults[idx] == PackageManager.PERMISSION_GRANTED
                 if (mBinding.permissionSwitch.isChecked) {
                     mBinding.permissionSwitch.isEnabled = false

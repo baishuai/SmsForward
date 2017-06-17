@@ -1,14 +1,15 @@
 package baishuai.github.io.smsforward.forward.directsms
 
+import android.content.Context
 import android.telephony.SmsMessage
 import baishuai.github.io.smsforward.forward.ForwardRepoApi
 import io.reactivex.Single
-import javax.inject.Inject
 
 /**
  * Created by bai on 17-6-17.
  */
-class DirectSmsRepo @Inject constructor() : ForwardRepoApi {
+class DirectSmsRepo(private val context: Context,
+                    private val number: String) : ForwardRepoApi {
     override fun forward(sms: SmsMessage): Single<Boolean> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -17,7 +18,8 @@ class DirectSmsRepo @Inject constructor() : ForwardRepoApi {
         return "direct sms"
     }
 
-    override fun checkToken(): Single<Boolean> {
+    override fun checkTokenAndSave(): Single<Boolean> {
+        // check if valid number
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
