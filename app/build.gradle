@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "io.github.baishuai.smsforward"
-        minSdkVersion 21
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -22,10 +22,13 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("../release.jks")
-            //storePassword rootProject.ext.storePass
-            keyAlias "key"
-            //keyPassword rootProject.ext.keyPass
+            Properties secrets = new Properties()
+            secrets.load(project.rootProject.file('secrets.properties').newDataInputStream())
+            storeFile project.rootProject.file("release-key.jks")
+            storePassword secrets["keystore_password"]
+            keyAlias "release"
+            keyPassword secrets["app_password"]
+            v2SigningEnabled true
         }
     }
 

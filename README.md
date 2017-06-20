@@ -13,6 +13,10 @@ Sms Forward   转发安卓手机收到短信
 
 ![](./docs/app-setting.png)
 
+### 下载安装
+
+![](./docs/fir-im-release.png)
+
 ## 使用方法
 
 ** [Slack账户token设置指南](./docs/setup_slack.md) **
