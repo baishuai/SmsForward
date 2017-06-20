@@ -9,18 +9,19 @@ Sms Forward   转发安卓手机收到短信
 
 ### 截图
 
-![](./docs/app-home.png) 
-
-![](./docs/app-setting.png)
+<img src=./docs/app-home.png width=216 height=384 />      <img src=./docs/app-setting.png width=216 height=384 />  
 
 ### 下载安装
 
-![](./docs/fir-im-release.png)
+<img src=./docs/fir-im-release.png width=400 height=400 />  
+
 
 ## 使用方法
 
-** [Slack账户token设置指南](./docs/setup_slack.md) **
-** [飞鸽快信设置指南](./docs/setup_feige.md) **
+**[Slack账户token设置指南](./docs/setup_slack.md)**  
+
+
+**[飞鸽快信设置指南](./docs/setup_feige.md)**
 
 按照上面两条指南中的任意一条设置好，并且按照指南里的说明获取到对应的`token`和`id`填在app的对应的设置页面中。
 
