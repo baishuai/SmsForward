@@ -62,11 +62,17 @@ class PrefsFragment : PreferenceFragmentCompat() {
                             }
                         })
                 builder.create().show()
+            } else {
+                updateRepos()
             }
-            Timber.d(preference.isChecked.toString())
-            //preference.isChecked = false
         }
-        return super.onPreferenceTreeClick(preference)
+        return true //super.onPreferenceTreeClick(preference)
+    }
+
+    fun updateRepos() {
+        val serviceIntent = Intent(activity, ForwardService::class.java)
+        serviceIntent.action = UPDATE_REPOS
+        context.startService(serviceIntent)
     }
 
     fun onClick(dialog: DialogInterface, binding: DialogTokenBinding, preference: CheckBoxPreference) {
@@ -95,9 +101,7 @@ class PrefsFragment : PreferenceFragmentCompat() {
                         Toast.makeText(context, getString(R.string.unvalid_config), Toast.LENGTH_LONG).show()
                     } else {
                         preference.isChecked = true
-                        val serviceIntent = Intent(activity, ForwardService::class.java)
-                        serviceIntent.action = UPDATE_REPOS
-                        context.startService(serviceIntent)
+                        updateRepos()
                     }
                 }, {
                     preference.isChecked = false
