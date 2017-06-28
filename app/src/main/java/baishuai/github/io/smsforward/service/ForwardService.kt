@@ -45,10 +45,7 @@ class ForwardService : Service() {
             Timber.d("onStartCommand " + intent.action)
             when (intent.action) {
                 Telephony.Sms.Intents.SMS_RECEIVED_ACTION -> {
-                    for (smsMessage in Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-                        Timber.d(smsMessage.messageBody)
-                        forward.forward(smsMessage)
-                    }
+                    forward.forward(Telephony.Sms.Intents.getMessagesFromIntent(intent))
                 }
                 MainFragment.REGISTER_RECEIVER -> {
                     val notificationIntent = Intent(this, MainActivity::class.java)

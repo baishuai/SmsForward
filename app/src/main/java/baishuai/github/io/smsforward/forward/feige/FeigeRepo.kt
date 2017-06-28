@@ -2,7 +2,6 @@ package baishuai.github.io.smsforward.forward.feige
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.telephony.SmsMessage
 import baishuai.github.io.smsforward.forward.ForwardRepoApi
 import io.reactivex.Single
 
@@ -18,11 +17,9 @@ class FeigeRepo(private val context: Context,
         return "feige"
     }
 
-    override fun forward(sms: SmsMessage): Single<Boolean> {
+    override fun forward(body: String, from: String): Single<Boolean> {
         return api.forward(uid, token, "status",
-                sms.displayMessageBody.substring(0, minOf(6, sms.displayMessageBody.length)),
-                sms.originatingAddress,
-                sms.messageBody)
+                body.substring(0, minOf(6, body.length)), from, body)
                 .retry(2).map { it.code == 200 }
     }
 

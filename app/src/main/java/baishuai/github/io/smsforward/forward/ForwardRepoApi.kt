@@ -1,16 +1,14 @@
 package baishuai.github.io.smsforward.forward
 
-import android.telephony.SmsMessage
 import io.reactivex.Single
 
 /**
  * Created by bai on 17-5-1.
  */
 interface ForwardRepoApi {
-    fun forward(sms: SmsMessage): Single<Boolean>
+    fun forward(body: String, from: String): Single<Boolean>
     fun checkTokenAndSave(): Single<Boolean>
     fun name(): String
-
 }
 
 

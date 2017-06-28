@@ -1,7 +1,6 @@
 package baishuai.github.io.smsforward.forward.directsms
 
 import android.content.Context
-import android.telephony.SmsMessage
 import baishuai.github.io.smsforward.forward.ForwardRepoApi
 import io.reactivex.Single
 
@@ -10,7 +9,8 @@ import io.reactivex.Single
  */
 class DirectSmsRepo(private val context: Context,
                     private val number: String) : ForwardRepoApi {
-    override fun forward(sms: SmsMessage): Single<Boolean> {
+
+    override fun forward(body: String, from: String): Single<Boolean> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

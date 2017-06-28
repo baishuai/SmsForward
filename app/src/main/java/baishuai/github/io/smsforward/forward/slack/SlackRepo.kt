@@ -2,7 +2,6 @@ package baishuai.github.io.smsforward.forward.slack
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.telephony.SmsMessage
 import baishuai.github.io.smsforward.forward.ForwardRepoApi
 import io.reactivex.Single
 
@@ -19,10 +18,8 @@ class SlackRepo(private val context: Context,
         return "slack"
     }
 
-    override fun forward(sms: SmsMessage): Single<Boolean> {
-        return api.forward(token, channel,
-                sms.messageBody,
-                sms.originatingAddress, false)
+    override fun forward(body: String, from: String): Single<Boolean> {
+        return api.forward(token, channel, body, from, false)
                 .retry(2).map { it.ok }
     }
 

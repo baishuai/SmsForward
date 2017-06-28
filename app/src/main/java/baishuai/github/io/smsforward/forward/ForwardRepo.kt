@@ -52,18 +52,21 @@ class ForwardRepo @Inject constructor(val context: IApp) {
         via_sms = sharedPreferences.getBoolean(context.getString(R.string.direct_sms_checkbox_preference), false)
     }
 
-    fun forward(sms: SmsMessage) {
+    fun forward(sms: Array<SmsMessage>) {
+        val body = sms.fold(StringBuilder()) { acc, sms -> acc.append(sms.displayMessageBody) }.trim().toString()
+        val from = if (sms.any()) sms.first().originatingAddress else "empty sms"
+
         repos.forEach {
-            it.forward(sms)
+            it.forward(body, from)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ Timber.d(it.toString() + " Forward Success") }, { onError(it, sms) })
+                    .subscribe({ Timber.d(it.toString() + " Forward Success") }, { onError(it, body, from) })
         }
     }
 
-    fun onError(t: Throwable, sms: SmsMessage) {
+    fun onError(t: Throwable, body: String, from: String) {
         if (via_sms) {
-            DirectSmsRepo(context, "todo number").forward(sms)
+            DirectSmsRepo(context, "todo number").forward(body, from)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ Timber.d(it.toString()) }, { Timber.d(it) })
