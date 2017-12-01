@@ -52,10 +52,17 @@ class ForwardRepo @Inject constructor(val context: IApp) {
         via_sms = sharedPreferences.getBoolean(context.getString(R.string.direct_sms_checkbox_preference), false)
     }
 
-    fun forward(sms: Array<SmsMessage>) {
-        val body = sms.fold(StringBuilder()) { acc, sms -> acc.append(sms.displayMessageBody) }.trim().toString()
+    fun forwardSms(sms: Array<SmsMessage>) {
+        val body = sms.fold(StringBuilder()) { acc, s -> acc.append(s.displayMessageBody) }.trim().toString()
         val from = if (sms.any()) sms.first().originatingAddress else "empty sms"
+        forward(body, from)
+    }
 
+    fun forwardMissCall(number: String) {
+        forward("您有来自" + number + "未接电话", number)
+    }
+
+    private fun forward(body: String, from: String) {
         repos.forEach {
             it.forward(body, from)
                     .subscribeOn(Schedulers.io())

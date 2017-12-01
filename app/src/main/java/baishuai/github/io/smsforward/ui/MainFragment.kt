@@ -69,7 +69,8 @@ class MainFragment : Fragment() {
             }
         }
 
-        val isGranted = ContextCompat.checkSelfPermission(activity, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
+        val isGranted = ContextCompat.checkSelfPermission(activity, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
         mBinding.permissionSwitch.isChecked = isGranted
 
         if (isGranted) {
@@ -79,7 +80,7 @@ class MainFragment : Fragment() {
             mBinding.permissionSwitch.text = getString(R.string.request_sms_permission)
             mBinding.permissionSwitch.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_SMS_RECEIVE)
+                    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_PHONE_STATE), REQUEST_SMS_RECEIVE)
                 }
             }
         }
@@ -89,8 +90,10 @@ class MainFragment : Fragment() {
         when (requestCode) {
             REQUEST_SMS_RECEIVE -> {
                 Log.d(this.javaClass.canonicalName, grantResults.toString())
-                val idx = permissions.asList().indexOf(Manifest.permission.RECEIVE_SMS)
-                mBinding.permissionSwitch.isChecked = grantResults[idx] == PackageManager.PERMISSION_GRANTED
+                val idxSms = permissions.asList().indexOf(Manifest.permission.RECEIVE_SMS)
+                val idxPhone = permissions.asList().indexOf(Manifest.permission.READ_PHONE_STATE)
+                mBinding.permissionSwitch.isChecked = (grantResults[idxSms] == PackageManager.PERMISSION_GRANTED) &&
+                        (grantResults[idxPhone] == PackageManager.PERMISSION_GRANTED)
                 if (mBinding.permissionSwitch.isChecked) {
                     mBinding.permissionSwitch.isEnabled = false
                     mBinding.permissionSwitch.setOnCheckedChangeListener(null)
